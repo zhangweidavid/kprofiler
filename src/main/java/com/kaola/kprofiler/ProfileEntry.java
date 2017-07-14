@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.kaola.kprofiler.config.ProfConfig;
+import com.kaola.kprofiler.config.KprofilerConfiguration;
 
 /**
  * Created by wei.zw on 2017/7/8.
@@ -256,7 +256,7 @@ public class ProfileEntry {
 	 */
 	private void toString(StringBuffer buffer, String prefix1, String prefix2) {
 		// 如果小于1ms则不统计
-		if (getDuration() < ProfConfig.getIgnoreThreshold()) {
+		if (getDuration() < KprofilerConfiguration.getIgnoreThreshold()) {
 			return;
 		}
 		buffer.append(prefix1);
@@ -306,7 +306,7 @@ public class ProfileEntry {
 		List<ProfileEntry> newList = new ArrayList<>();
 
 		for (ProfileEntry subEntry : subEntries) {
-			if (subEntry.getDuration() < ProfConfig.getIgnoreThreshold()) {
+			if (subEntry.getDuration() < KprofilerConfiguration.getIgnoreThreshold()) {
 				continue;
 			}
 			newList.add(subEntry);

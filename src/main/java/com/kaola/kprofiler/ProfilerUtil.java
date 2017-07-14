@@ -2,9 +2,7 @@ package com.kaola.kprofiler;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.regex.Pattern;
 
-import com.kaola.kprofiler.config.ProfConfig;
 import com.kaola.kprofiler.utils.DailyRollingLog;
 import com.kaola.kprofiler.utils.LogFactory;
 
@@ -13,16 +11,11 @@ import com.kaola.kprofiler.utils.LogFactory;
  */
 public class ProfilerUtil {
 
-	private static ProfConfig profConfig = new ProfConfig();
+	
 
 	private static final DailyRollingLog log = LogFactory.getLog();
 
-	private static final Pattern METHOD_PATTERN = Pattern.compile("\\.\\w+\\([^()]*\\)");
 
-	/**
-	 * 性能日志打印阀值，单位：ms
-	 */
-	private static final long maxDuration = 200;
 
 	private static final ExecutorService es = Executors.newCachedThreadPool();
 

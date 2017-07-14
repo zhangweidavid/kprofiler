@@ -43,7 +43,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
 			}
 
 			// 只监控白名单包
-			boolean isStarted = ProfFilter.isNeedInject(className);
+			boolean isStarted = ProfFilter.isNeedProfiler(className);
 			if (isStarted) {
 				LogFactory.getRunLog().info("[===========开启性能监控统计=========]:" + className);
 			}

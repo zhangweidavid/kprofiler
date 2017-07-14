@@ -13,7 +13,7 @@ import java.util.Properties;
 import com.kaola.kprofiler.utils.PropertyUtils;
 
 /**
- * Desc:TODO
+ * Desc:代理属性
  * 
  * @author wei.zw
  * @since 2017年7月12日 下午11:46:55
@@ -29,11 +29,8 @@ public class DelegatingProperties extends Properties {
 	public DelegatingProperties(Properties context) {
 		this.context = context;
 	}
-	
-	
-	
 
-	/** 
+	/**
 	 * @see java.util.Properties#load(java.io.Reader)
 	 */
 	@Override
@@ -42,9 +39,6 @@ public class DelegatingProperties extends Properties {
 		super.load(reader);
 		context.putAll(this);
 	}
-
-
-
 
 	public String getProperty(String key) {
 		String value = super.getProperty(key);
