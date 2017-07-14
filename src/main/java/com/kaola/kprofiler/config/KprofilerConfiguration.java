@@ -2,6 +2,7 @@ package com.kaola.kprofiler.config;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -68,6 +69,13 @@ public class KprofilerConfiguration {
 		excludePackage.add("com/netease/haitao/framework/");
 		excludePackage.add("redis/clients/");
 		excludePackage.add("rx/");
+		if (!DEFAULT_CONFIG_FILE.exists()) {
+			try {
+				DEFAULT_CONFIG_FILE.createNewFile();
+			} catch (IOException e) {
+				// logger.error("", e);
+			}
+		}
 	}
 
 	/**
@@ -75,20 +83,27 @@ public class KprofilerConfiguration {
 	 */
 	private String logName = "kprofiler.log";
 
-	private static KprofilerConfiguration instance = new KprofilerConfiguration();
 
 	public static KprofilerConfiguration getInstance() {
-		return instance;
+		return InstanceHolder.instance;
+	}
+
+	private static class InstanceHolder {
+		public static KprofilerConfiguration instance = new KprofilerConfiguration();
 	}
 
 	/**
 	 * 
 	 */
 	private KprofilerConfiguration() {
+
+		System.out.println("kprofilier configuration init");
 		File file = findConfigFile();
 		if (file.exists() && file.isFile()) {
 			Properties properties = loadProperties(file);
 			initConfig(properties);
+		} else {
+			System.err.println("not find configuration");
 		}
 
 	}
@@ -110,6 +125,7 @@ public class KprofilerConfiguration {
 	public Properties loadProperties(File file) {
 		DelegatingProperties properties = new DelegatingProperties(System.getProperties());
 		try {
+			System.out.println("loadProperites");
 			properties.load(new FileReader(file)); // 配置文件原始内容，未进行变量替换
 
 		} catch (Exception e) {
@@ -127,11 +143,15 @@ public class KprofilerConfiguration {
 	}
 
 	private void initConfig(Properties properties) {
+		System.out.println("[properties]" + properties);
 		String debugModel = properties.getProperty("profiler.debug");
+
 		String logName = properties.getProperty("profiler.logName");
 		String logHome = properties.getProperty("profiler.logHome");
 		String ignoreThreshold = properties.getProperty("profiler.ignoreThreshold");
 		String profilePackageStr = properties.getProperty("profiler.profilerPackage");
+
+		System.out.println("profiler.profilerPackage get  " + profilePackageStr);
 		String ignoreSetterAndGetter = properties.getProperty("profiler.ignore.getterAndSetter");
 		if (!StringUtils.isBlank(profilePackageStr)) {
 			String[] packages = profilePackageStr.split(";");

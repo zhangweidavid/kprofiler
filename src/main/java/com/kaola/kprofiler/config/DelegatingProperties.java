@@ -41,13 +41,20 @@ public class DelegatingProperties extends Properties {
 	}
 
 	public String getProperty(String key) {
+		System.out.println("get " + key);
 		String value = super.getProperty(key);
+		if (value == null) {
+			return null;
+		}
 		return PropertyUtils.replacePlaceholder(value, context);
 
 	}
 
 	public String getProperty(String key, String defaultValue) {
 		String value = super.getProperty(key, defaultValue);
+		if (value == null) {
+			return null;
+		}
 		return PropertyUtils.replacePlaceholder(value, context);
 	}
 
