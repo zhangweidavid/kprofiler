@@ -25,13 +25,16 @@ public class ProfilerTransformer implements ClassFileTransformer {
 			ProtectionDomain protectionDomain, byte[] classfileBuffer)
 			throws IllegalClassFormatException {
 		try {
-			// TODO 该处需要读取配置文件，指定增强的包
+			if (loader == null) {
+				return classfileBuffer;
+			}
 			if (ProfFilter.isNotNeedInject(className)) {
 				return classfileBuffer;
 			}
 			if (ProfFilter.modifiedClass.contains(className)) {
 				return classfileBuffer;
 			}
+			
 			ClassPool mPool = new ClassPool(true);
 			mPool.appendClassPath(new LoaderClassPath(loader));
 			mPool.importPackage("com.kaola.kprofiler");
@@ -43,7 +46,7 @@ public class ProfilerTransformer implements ClassFileTransformer {
 			}
 
 			// 只监控白名单包
-			boolean isStarted = ProfFilter.isNeedInject(className);
+			boolean isStarted = ProfFilter.isNeedProfiler(className);
 			if (isStarted) {
 				LogFactory.getRunLog().info("[===========开启性能监控统计=========]:" + className);
 			}

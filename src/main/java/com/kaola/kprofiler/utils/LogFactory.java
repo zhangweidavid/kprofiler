@@ -8,6 +8,8 @@ package com.kaola.kprofiler.utils;
 
 import java.io.File;
 
+import com.kaola.kprofiler.config.KprofilerConfiguration;
+
 /**
  * Desc:TODO
  * 
@@ -17,7 +19,7 @@ import java.io.File;
  */
 
 public class LogFactory {
-	private static String homePath = (String) System.getProperties().get("user.home");
+	// private static String homePath = (String) System.getProperties().get("user.home");
 
 	public static DailyRollingLog getLog() {
 		return LogHolder.log;
@@ -28,8 +30,11 @@ public class LogFactory {
 	}
 
 	private static class LogHolder {
-		public static DailyRollingLog log = new DailyRollingLog(homePath + File.separator + "kprofiler.log");
 
-		public static DailyRollingLog runLog = new DailyRollingLog(homePath + File.separator + "run.log");
+		public static DailyRollingLog log = new DailyRollingLog(
+				KprofilerConfiguration.getInstance().getLogHome() + KprofilerConfiguration.getInstance().getLogName());
+
+		public static DailyRollingLog runLog = new DailyRollingLog(
+				KprofilerConfiguration.getInstance().getLogHome() + "run.log");
 	}
 }

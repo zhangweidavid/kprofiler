@@ -62,7 +62,7 @@ public class DailyRollingLog {
 	 * @param filePath
 	 */
 	public DailyRollingLog(String filePath) {
-		System.out.println(filePath);
+		System.out.println("init log "+filePath);
 		fileName = filePath;
 		Date now = new Date();
 		rollingFileName = fileName + sdf.format(now);
