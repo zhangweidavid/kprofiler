@@ -9,7 +9,9 @@
  profiler.logHome 用户指定性能日志目录 默认值为${user.home}/kprofiler/
  
  profiler.profilerPackage 用于指定性能日志统计的开始入口包，只有访问该包下的方法才会输出性能日志
- 
+ profiler.profilerMethod  用于指定性能日志统计的开始入口方法，只有访问指定的方法才会输出性能日志
+ profiler.logArgsMethod     用于指定性需要输出入参的方法，不在该方法中不输出入参
+
  profiler.excludePackage  用于指定排出性能日志统计的包，对该包下的方法不进行增强
  
  ## 日志格式说明
